@@ -9,7 +9,7 @@ const initialState = {
     'phone': ''
 }
 
-function AddTableItem() {
+function AddTableItem(props) {
 
     const [newItem, setNewItem] = useState(initialState)
 
@@ -27,8 +27,10 @@ function AddTableItem() {
                     email: newItem.email,
                     phone: newItem.phone
                 })})
-        .then((response) => response.json())
-        .then((response) => console.log(response))
+        .then(response => response.json())
+        .then((response) => {
+            props.setDataTable(prevState => [...prevState, response])
+        })
         .catch(error => console.log(error))
     }
 
@@ -40,22 +42,26 @@ function AddTableItem() {
                         onChange={ (e) => setNewItem((prevState) => ({
                             ...prevState,
                             name: e.target.value
-                        }))}/></th>
+                        }))}/>
+                    </th>
                     <th><input type="text" defaultValue={ initialState.username }
                         onChange={ (e) => setNewItem((prevState) => ({
                             ...prevState,
                             username: e.target.value 
-                        }))}/></th>
+                        }))}/>
+                    </th>
                     <th><input type="text" defaultValue={ initialState.email }
                         onChange={ (e) => setNewItem((prevState) => ({
                             ...prevState,
                             email: e.target.value 
-                        }))}/></th>
+                        }))}/>
+                    </th>
                     <th><input type="text" defaultValue={ initialState.phone }
                         onChange={ (e) => setNewItem((prevState) => ({
                             ...prevState,
                             phone: e.target.value 
-                        }))}/></th>
+                        }))}/>
+                    </th>
                     <th><button type="button" onClick={ (e) => handleSubmit(e) }>add user</button></th>
                 </tr>
             </tbody>
